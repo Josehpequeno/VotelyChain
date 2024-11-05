@@ -1,0 +1,26 @@
+{{ define "content" }}
+<h2 class="text-2xl font-semibold mb-4">Lista de Candidatos</h2>
+<ul class="space-y-2">
+    {{ range . }}
+    <li class="p-4 bg-white shadow-md rounded flex justify-between">
+        <span>{{ .Name }} ({{ .Votes }} votos)</span>
+        <form hx-post="/candidates/vote" hx-target="#candidates-list" class="inline">
+            <input type="hidden" name="candidate_id" value="{{ .ID }}">
+            <button type="submit" class="px-2 py-1 bg-blue-500 text-white rounded">Votar</button>
+        </form>
+    </li>
+    {{ else }}
+    <li class="p-4 bg-white shadow-md rounded">Nenhum candidato cadastrado.</li>
+    {{ end }}
+</ul>
+
+<h2 class="text-2xl font-semibold mt-8 mb-4">Cadastrar Novo Candidato</h2>
+<form hx-post="/candidates/register" hx-target="#candidates-list" class="space-y-4">
+    <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Nome do Candidato</label>
+        <input type="text" class="w-full mt-1 p-2 border border-gray-300 rounded" id="name" name="name" required>
+    </div>
+    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Cadastrar</button>
+</form>
+{{ end }}
+
